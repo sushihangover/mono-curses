@@ -28,16 +28,16 @@ DOCS_DIST = \
 all: config.make mono-curses.dll libmono-curses.so mono-curses.zip mono-curses.pc
 
 test.exe: test.cs mono-curses.dll libmono-curses.so
-	dmcs -debug test.cs -r:mono-curses.dll
+	mcs -debug test.cs -r:mono-curses.dll
 
 grun: gtest.exe
 	MONO_PATH=. mono --debug gtest.exe
 
 gtest.exe: gtest.cs mono-curses.dll
-	dmcs -debug gtest.cs -r:mono-curses.dll
+	mcs -debug gtest.cs -r:mono-curses.dll
 
 mltest.exe: mltest.cs mono-curses.dll
-	dmcs -debug mltest.cs -r:mono-curses.dll
+	mcs -debug mltest.cs -r:mono-curses.dll
 
 mlrun: mltest.exe
 	mono --debug mltest.exe
@@ -46,7 +46,7 @@ mono-curses.pc: mono-curses.pc.in Makefile
 	sed -e 's,@PREFIX@,$(prefix),' -e 's/@VERSION@/$(VERSION)/' < mono-curses.pc.in > mono-curses.pc
 
 mono-curses.dll mono-curses.xml: $(SOURCES)
-	dmcs -doc:mono-curses.xml -debug -target:library -out:mono-curses.dll -r:Mono.Posix -debug $(SOURCES)
+	mcs -platform:x64 -doc:mono-curses.xml -debug -target:library -out:mono-curses.dll -r:Mono.Posix -debug $(SOURCES)
 
 #
 mono-curses.tree mono-curses.zip: mono-curses.xml mono-curses.dll docs/ns-Mono.Terminal.xml docs/index.xml
